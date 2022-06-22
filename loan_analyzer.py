@@ -21,21 +21,26 @@ loan_costs = [500, 600, 200, 1000, 450]
 # Print the number of loans from the list
 # YOUR CODE HERE!
 
-number_of_loans = len(loan_costs)
-print("Number of Loans: ", number_of_loans)
+# number_of_loans = len(loan_costs)
+
+print("Number of Loans: ", len(loan_costs))
 
 # What is the total of all loans?
 # @TODO: Use the `sum` function to calculate the total of all loans in the list.
 # Print the total value of the loans
 # YOUR CODE HERE!
 
-sum_loans = sum(loan_costs)
-print("Sum: ", sum_loans)
+# sum_loans = sum(loan_costs)
+
+print("Sum: ", sum(loan_costs))
 
 # What is the average loan amount from the list?
 # @TODO: Using the sum of all loans and the total number of loans, calculate the average loan price.
 # Print the average loan amount
 # YOUR CODE HERE!
+
+number_of_loans = len(loan_costs)
+sum_loans = sum(loan_costs)
 
 average_loan = (sum_loans / number_of_loans)
 print("Average Loan: ", average_loan)
@@ -192,7 +197,7 @@ inexpensive_loans = []
 
 for loan in loans:
     if loan['loan_price'] <= 500:
-        inexpensive_loans.append(loan['loan_price'])
+        inexpensive_loans.append(loan)
 print("Inexpensive loans:", inexpensive_loans)
 
 
@@ -211,8 +216,7 @@ Output this list of inexpensive loans to a csv file
 """
 
 # Set the output header
-header = ["loan_price", "remaining_months",
-          "repayment_interval", "future_value"]
+# header = ["loan_price", "remaining_months", "repayment_interval", "future_value"]
 
 # Set the output file path
 output_path = Path("inexpensive_loans.csv")
@@ -221,5 +225,18 @@ output_path = Path("inexpensive_loans.csv")
 # and each row of `loan.values()` from the `inexpensive_loans` list.
 # YOUR CODE HERE!
 
-with open(output_path, 'w') as csvfile:
-    cvswriter = csv.writer(csvfile)
+#Field Names:  "loan_price"
+#              "remaining_months"
+#              "repayment_interval"
+#              "future_value"
+
+with open('inexpensive_loans.csv', 'w') as csvfile:
+    loanparams = ['loan_price', 'remaining_months', 'repayment_interval', 'future_value']
+    
+    csvwriter = csv.DictWriter(csvfile, fieldnames=loanparams)
+    csvwriter.writeheader()
+
+    for loan in inexpensive_loans:        
+        csvwriter.writerow({'loan_price': loan['loan_price'], 'remaining_months': loan['remaining_months'], 'repayment_interval': loan['repayment_interval'], 'future_value': loan['future_value']})
+
+
